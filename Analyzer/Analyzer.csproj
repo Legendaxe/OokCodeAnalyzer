@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OokCodeAnalyzer.Core\OokCodeAnalyzer.Core.csproj" />
+      <ProjectReference Include="..\Synthesizer\Synthesizer.csproj" />
     </ItemGroup>
 
 </Project>
