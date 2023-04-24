@@ -5,13 +5,8 @@ using Synthesizer;
 
 namespace Analyzer;
 
-public class Analyzer
+public static class Analyzer
 {
-
-    public static void Main()
-    {
-        ScrapTextForLexemes(Synthesizer.Synthesizer.SynthesizeOokCode(1000));
-    }
     public static IEnumerable<string> ScrapTextForLexemes(string text)
     {
         Regex regex = new Regex("(((Ook[!?.]\\s*Ook[!.])|(Ook[!.]\\s*Ook\\?))\\s*)+");

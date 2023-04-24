@@ -7,4 +7,9 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Analyzer\Analyzer.csproj" />
+      <ProjectReference Include="..\Synthesizer\Synthesizer.csproj" />
+    </ItemGroup>
+
 </Project>

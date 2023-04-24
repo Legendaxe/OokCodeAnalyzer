@@ -3,10 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFUI"
+        Background="Beige"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Ook Analyzer" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Grid.Row="0"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               Content="Write Ook! code"/>
+        <TextBox Grid.Column="0" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" 
+                 MaxHeight="250" Width="300" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 x:Name="InputCode"/>
+        <Label Grid.Column="0" Grid.Row="2"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               Content="Or generate it randomly"/>
+        <Button Grid.Column="0" Grid.Row="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Margin="10 10"
+                Width="200"
+                Height="50"
+                Content="Synthesize random Ook code"
+                x:Name="SynthesizerButton"
+                Click="SynthesizerButton_OnClick"/>
+        
+        <Label Grid.Column="1" Grid.Row="0"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               Content="Analyzer Output"/>
+        
+        <TextBox Grid.Column="1" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" 
+                 MaxHeight="250" Width="190"
+                 x:Name="AnalyzerOutput"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <Button Grid.Column="1" Grid.Row="2"
+                Grid.RowSpan="2"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="10 10"
+                Width="200"
+                Height="50"
+                Content="Analyze Ook code"
+                x:Name="AnalyzeButton"
+                Click="AnalyzeButton_OnClick"/>
     </Grid>
 </Window>
