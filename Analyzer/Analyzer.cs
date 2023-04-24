@@ -1,4 +1,6 @@
-﻿using OokCodeAnalyzer.Core;
+﻿using System.Text;
+using System.Text.RegularExpressions;
+using OokCodeAnalyzer.Core;
 using Synthesizer;
 
 namespace Analyzer;
@@ -6,42 +8,23 @@ namespace Analyzer;
 public class Analyzer
 {
 
-    private enum State
-    {
-        
-    }
-    
     public static void Main()
     {
-        ScrapTextForLexemes(Synthesizer.Synthesizer.SynthesizeOokCode(5) + "asdasdsdfsadfs" + Synthesizer.Synthesizer.SynthesizeOokCode(5));
+        ScrapTextForLexemes(Synthesizer.Synthesizer.SynthesizeOokCode(1000));
     }
     public static IEnumerable<string> ScrapTextForLexemes(string text)
     {
         List<string> lexemes = new List<string>();
-        string lexeme;
+
+        Regex regex = new Regex("(((Ook[!?.]\\s*Ook[!.])|(Ook[!.]\\s*Ook\\?))\\s*)+");
         
-        text = text.ReplaceLineEndings("").Replace(" ", "");
-        int i = 0;
-        while (i < text.Length)
+        int i = 1;
+        Match match = regex.Match(text); 
+        
+        lexemes = match.Groups[2].Captures.Select(lex => $"Lexeme: \"{lex.Value}\" #{i++}").ToList();
+        if (match.Length < text.Length)
         {
-            if (i + 9 > text.Length)
-            {
-                lexemes.Add($"Error occured, this is not a lexeme: {text.Substring(i)}");
-                break;
-            }
-
-            lexeme = text.Substring(i, 9);
-            if (OokWord.IsOokWord(lexeme))
-            {
-                lexemes.Add($"Lexeme: \"{lexeme}\" #{lexemes.Count + 1}");
-            }
-            else
-            {
-                lexemes.Add($"Error occured, this is not a lexeme: {lexeme}");
-                break;
-            }
-
-            i += 9;
+            lexemes.Add($"Error occured on {match.Length + 1} symbol");
         }
 
         return lexemes;
