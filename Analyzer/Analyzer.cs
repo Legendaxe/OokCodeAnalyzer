@@ -14,14 +14,12 @@ public class Analyzer
     }
     public static IEnumerable<string> ScrapTextForLexemes(string text)
     {
-        List<string> lexemes = new List<string>();
-
         Regex regex = new Regex("(((Ook[!?.]\\s*Ook[!.])|(Ook[!.]\\s*Ook\\?))\\s*)+");
         
         int i = 1;
         Match match = regex.Match(text); 
         
-        lexemes = match.Groups[2].Captures.Select(lex => $"Lexeme: \"{lex.Value}\" #{i++}").ToList();
+        List<string> lexemes = match.Groups[2].Captures.Select(lex => $"Lexeme: \"{lex.Value}\" #{i++}").ToList();
         if (match.Length < text.Length)
         {
             lexemes.Add($"Error occured on {match.Length + 1} symbol");
