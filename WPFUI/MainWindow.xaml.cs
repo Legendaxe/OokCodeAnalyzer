@@ -24,7 +24,7 @@ namespace WPFUI
 
         private void SynthesizerButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.InputCode.Text = Synthesizer.Synthesizer.SynthesizeOokCode(50);
+            this.InputCode.Text = Synthesizer.Synthesizer.SynthesizeOokCodeByStateMachine(50);
         }
     }
 }
