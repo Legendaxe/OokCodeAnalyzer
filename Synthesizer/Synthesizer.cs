@@ -24,7 +24,7 @@ public static class Synthesizer
         for (int i = 0; i < tokensLen; i++)
         {
             OokStateMachine.State state = OokStateMachine.State.Word;
-            while (state != OokStateMachine.State.End)
+            while (state != OokStateMachine.State.Begin)
             {
                 state = ookStateMachine.Funcs[state].Item2();
                 switch (state)
@@ -56,6 +56,8 @@ public static class Synthesizer
                 }
             }
         }
+
+        ookCode.Remove(ookCode.Length - 1, 1);
 
         return ookCode.ToString();
     }

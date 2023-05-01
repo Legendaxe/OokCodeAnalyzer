@@ -29,7 +29,6 @@ public class OokStateMachine
         OokQOok,
         OokQOokD,
         OokQOokE,
-        End,
         Error
     }
 
@@ -44,7 +43,7 @@ public class OokStateMachine
     {
         Funcs = new Dictionary<State, (Func<char, State>, Func<State>)>
         {
-            { State.Begin, (ch => char.IsWhiteSpace(ch) ? State.Begin : State.Word, () => State.Word) },
+            { State.Begin, (ch => char.IsWhiteSpace(ch) ? State.Begin : ch == 'O' ? State.O : State.Word, () => State.Word) },
             { State.Word, ( ch => ch == 'O' ? State.O : State.Error, () => State.O ) },
             { State.O, ( ch => ch == 'o' ? State.Oo : State.Error, () => State.Oo ) },
             { State.Oo, ( ch => ch == 'k' ? State.Ook : State.Error, () => State.Ook ) },
@@ -71,9 +70,9 @@ public class OokStateMachine
                 },
                 () => RandomState(new [] {State.OokDOokD, State.OokDOokE, State.OokDOokQ})
             ) },
-            { State.OokDOokD, ( ch => State.End, () => State.End ) },
-            { State.OokDOokE, ( ch => State.End, () => State.End ) },
-            { State.OokDOokQ, ( ch => State.End, () => State.End ) },
+            { State.OokDOokD, ( ch => State.Begin, () => State.Begin ) },
+            { State.OokDOokE, ( ch => State.Begin, () => State.Begin ) },
+            { State.OokDOokQ, ( ch => State.Begin, () => State.Begin ) },
             { State.OokE, ( ch => char.IsWhiteSpace(ch) ? State.OokE : (ch == 'O' ? State.OokEO : State.Error), () => State.OokEO ) },
             { State.OokEO, ( ch => ch == 'o' ? State.OokEOo : State.Error, () => State.OokEOo ) },
             { State.OokEOo, ( ch => ch == 'k' ? State.OokEOok : State.Error, () => State.OokEOok ) },
@@ -87,9 +86,9 @@ public class OokStateMachine
                 },
                 () => RandomState(new [] {State.OokEOokD, State.OokEOokE, State.OokEOokQ})
             ) },
-            { State.OokEOokD, ( ch => State.End, () => State.End ) },
-            { State.OokEOokE, ( ch => State.End, () => State.End ) },
-            { State.OokEOokQ, ( ch => State.End, () => State.End ) },
+            { State.OokEOokD, ( ch => State.Begin, () => State.Begin ) },
+            { State.OokEOokE, ( ch => State.Begin, () => State.Begin ) },
+            { State.OokEOokQ, ( ch => State.Begin, () => State.Begin ) },
             { State.OokQ, ( ch => char.IsWhiteSpace(ch) ? State.OokQ : (ch == 'O' ? State.OokQO : State.Error), () => State.OokQO ) },
             { State.OokQO, ( ch => ch == 'o' ? State.OokQOo : State.Error, () => State.OokQOo ) },
             { State.OokQOo, ( ch => ch == 'k' ? State.OokQOok : State.Error, () => State.OokQOok ) },
@@ -102,8 +101,8 @@ public class OokStateMachine
                 },
                 () => RandomState(new [] { State.OokQOokD, State.OokQOokE})
             ) },
-            { State.OokQOokD, ( ch => State.End, () => State.End ) },
-            { State.OokQOokE, ( ch => State.End, () => State.End ) },
+            { State.OokQOokD, ( ch => State.Begin, () => State.Begin ) },
+            { State.OokQOokE, ( ch => State.Begin, () => State.Begin ) },
         };
     }
 
