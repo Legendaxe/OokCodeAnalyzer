@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 using Analyzer;
-
+using Synthesizer;
 
 namespace WPFUI
 {

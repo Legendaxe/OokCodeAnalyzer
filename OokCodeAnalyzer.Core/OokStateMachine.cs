@@ -1,6 +1,6 @@
 ﻿namespace OokCodeAnalyzer.Core;
 
-public class OokStateMachine
+public static class OokStateMachine
 {
     public enum State
     {
@@ -32,14 +32,14 @@ public class OokStateMachine
         Error
     }
 
-    private Random _random = new Random();
-    public Dictionary<State,  (Func<char, State>, Func<State>)> Funcs { get; }
+    private static Random _random = new Random();
+    public static Dictionary<State,  (Func<char, State>, Func<State>)> Funcs { get; }
 
 
-    public State RandomState(State[] states) =>
+    private static State RandomState(State[] states) =>
         states[_random.Next(states.Length)];
         
-    public OokStateMachine()
+    static OokStateMachine()
     {
         Funcs = new Dictionary<State, (Func<char, State>, Func<State>)>
         {

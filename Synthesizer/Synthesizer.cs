@@ -5,7 +5,6 @@ namespace Synthesizer;
 
 public static class Synthesizer
 {
-
     public static void Main()
     {
         Console.WriteLine(SynthesizeOokCodeByStateMachine(30));
@@ -19,14 +18,14 @@ public static class Synthesizer
         }
         
         StringBuilder ookCode = new StringBuilder();
-        OokStateMachine ookStateMachine = new OokStateMachine();
+        var ookStateMachine = OokStateMachine.Funcs;
 
         for (int i = 0; i < tokensLen; i++)
         {
             OokStateMachine.State state = OokStateMachine.State.Word;
             while (state != OokStateMachine.State.Begin)
             {
-                state = ookStateMachine.Funcs[state].Item2();
+                state = ookStateMachine[state].Item2();
                 switch (state)
                 {
                     case OokStateMachine.State.OokDOokD:

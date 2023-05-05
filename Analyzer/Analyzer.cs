@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
-using OokCodeAnalyzer.Core;
-using Synthesizer;
+﻿using OokCodeAnalyzer.Core;
 
 namespace Analyzer;
 
@@ -11,7 +8,7 @@ public static class Analyzer
     {
         List<string> lexemes = new List<string>();
 
-        OokStateMachine ookStateMachine = new OokStateMachine();
+        var ookStateMachine = OokStateMachine.Funcs;
         OokStateMachine.State state = OokStateMachine.State.Begin;
         
         char[] ch = new Char[1];
@@ -22,7 +19,7 @@ public static class Analyzer
         {
             while (stringReader.Read(ch, 0, 1) >= 1 && state != OokStateMachine.State.Error)
             {
-                state = ookStateMachine.Funcs[state].Item1(ch[0]);
+                state = ookStateMachine[state].Item1(ch[0]);
                 switch (state)
                 {
                     case OokStateMachine.State.OokDOokD:
