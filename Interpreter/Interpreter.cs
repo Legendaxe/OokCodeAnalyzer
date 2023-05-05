@@ -50,6 +50,7 @@ public class Interpreter
     private readonly char[] _ch = new char[1];
 
     private readonly LinkedList<OpCode> _opCodes = new LinkedList<OpCode>();
+    private LinkedListNode<OpCode>? _currentOp;
 
 
     public Interpreter(string code)
@@ -64,8 +65,8 @@ public class Interpreter
             {OpCode.OpDecCell, () => _memoryCells[_pointer]--},
             {OpCode.OpIncPtr, () => _pointer++},
             {OpCode.OpDecPtr, () => _pointer--},
-            {OpCode.OpLoopL, () => {} },
-            {OpCode.OpLoopR, () => {} }
+            {OpCode.OpLoopL, LoopFunc},
+            {OpCode.OpLoopR, () => {}}
         };
     }
 
@@ -113,61 +114,46 @@ public class Interpreter
                 return;
             }
         }
-        
-        var currentOp = _opCodes.First;
 
-        int i;
-        while (currentOp is not null)
+
+        if (_opCodes.First is null)
         {
-            _opCodesFuncs[currentOp.Value]();
-            switch (currentOp.Value)
-            {
-                case OpCode.OpLoopL:
-                    if (_memoryCells[_pointer] == 0)
-                    {
-                        i = 1;
-                        
-                        while (currentOp.Next is not null)
-                        {
-                            currentOp = currentOp.Next;
-                            if (currentOp.Value == OpCode.OpLoopL)
-                            {
-                                i++;
-                            }
-                            else if (currentOp.Value == OpCode.OpLoopR)
-                            {
-                                i--;
-                                if (i == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case OpCode.OpLoopR:
-                    i = 1;
-                    while (currentOp.Previous is not null)
-                    {
-                        currentOp = currentOp.Previous;
-                        if (currentOp.Value == OpCode.OpLoopL)
-                        {
-                            i--;
-                            if (i == 0)
-                            {
-                                currentOp = currentOp.Previous;
-                                break;
-                            }
-                        }
-                        else if (currentOp.Value == OpCode.OpLoopR)
-                        {
-                            i++;
-                        }
-                    }            
-                    break;
-            }
-
-            currentOp = currentOp?.Next;
+            return;
         }
+
+        _currentOp = _opCodes.First;
+        
+        
+        while (_currentOp.Next is not null)
+        {
+            _opCodesFuncs[_currentOp.Value]();
+            _currentOp = _currentOp.Next;
+        }
+
+        _opCodesFuncs[_currentOp.Value]();
+    }
+    
+    private void LoopFunc()
+    {
+        if (_currentOp is null)
+        {
+            return;
+        }
+        
+        LinkedListNode<OpCode> enterOp = _currentOp;
+        
+        while (_currentOp.Next is not null)
+        {
+            _currentOp = _currentOp.Next;
+            _opCodesFuncs[_currentOp.Value]();
+            switch (_currentOp.Value)
+            {
+                case OpCode.OpLoopR:
+                    _currentOp = _memoryCells[_pointer] == 0 ? _currentOp : enterOp.Previous;
+                    return;
+            }
+        }
+        
+        _opCodesFuncs[_currentOp.Value]();
     }
 }
